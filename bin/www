@@ -5,7 +5,7 @@
  */
 
 var app = require('../app');
-var debug = require('debug')('library-final-project-csc3221:server');
+var debug = require('debug')('gourmacracy-customer-backend:server');
 var http = require('http');
 
 /**
