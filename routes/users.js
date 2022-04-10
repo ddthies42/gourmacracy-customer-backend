@@ -11,23 +11,23 @@ function HandleError(response, reason, message, code){
 router.get('/', (request, response, next)=>{
     let name = request.query['name'];
     if (name){
-        BookSchema
-            .find({"title": name})
-            .exec( (error, books) =>{
+        UserSchema
+            .find({"name": name})
+            .exec( (error, users) =>{
                 if (error){
                     response.send({"error": error});
                 }else{
-                    response.send(books);
+                    response.send(users);
                 }
             });
     }else{
-        BookSchema
+        UserSchema
             .find()
-            .exec( (error, books) =>{
+            .exec( (error, users) =>{
                 if (error){
                     response.send({"error": error});
                 }else{
-                    response.send(books);
+                    response.send(users);
                 }
             });
     }
@@ -35,7 +35,7 @@ router.get('/', (request, response, next)=>{
 
 //Gets the book with the given id (catch error of id not found)
 router.get('/:id', (request, response, next) =>{
-    BookSchema
+    UserSchema
         .findById({"_id": request.params.id}, (error, result) => {
             if (error){
                 response.status(500).send(error);
@@ -70,7 +70,7 @@ router.post('/', (request, response, next) =>{
 
 //Modifies a book with the given id
 router.patch('/:id', (request, response, next) => {
-    BookSchema
+    UserSchema
         .findById(request.params.id, (error, result) => {
             if (error) {
                 response.status(500).send(error);
@@ -81,11 +81,11 @@ router.patch('/:id', (request, response, next) => {
                 for (let field in request.body){
                     result[field] = request.body[field];
                 }
-                result.save((error, book)=>{
+                result.save((error, user)=>{
                     if (error){
                         response.status(500).send(error);
                     }
-                    response.send(book);
+                    response.send(user);
                 });
             }else{
                 response.status(404).send({"id": request.params.id, "error":  "Not Found"});
@@ -95,7 +95,7 @@ router.patch('/:id', (request, response, next) => {
 
 //Deletes a book with the given id
 router.delete('/:id', (request, response, next) => {
-    BookSchema
+    UserSchema
         .findById(request.params.id, (error, result)=>{
             if (error) {
                 response.status(500).send(error);
