@@ -15,8 +15,20 @@
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
-    "mongoose": "^5.12.11",
+    "mongoose": "^5.13.14",
     "morgan": "~1.9.1",
+    "node": "^17.7.2",
     "pug": "^3.0.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/StylesPRiley/gourmacracy-customer-backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/StylesPRiley/gourmacracy-customer-backend/issues"
+  },
+  "homepage": "https://github.com/StylesPRiley/gourmacracy-customer-backend#readme",
+  "description": ""
 }
