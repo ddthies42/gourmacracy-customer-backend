@@ -7,12 +7,12 @@ function HandleError(response, reason, message, code){
     response.status(code || 500).json({"error": message});
 }
 
-//Gets all the books
+//Gets all the users ---
 router.get('/', (request, response, next)=>{
-    let name = request.query['name'];
-    if (name){
+    let word = request.query['name'];
+    if (word){
         UserSchema
-            .find({"name": name})
+            .find({"email": word})
             .exec( (error, users) =>{
                 if (error){
                     response.send({"error": error});
@@ -33,16 +33,16 @@ router.get('/', (request, response, next)=>{
     }
 });
 
-//Gets the book with the given id (catch error of id not found)
-router.get('/:id', (request, response, next) =>{
+//Gets the user with the given email (catch error of id not found)
+router.get('/:email', (request, response, next) =>{
     UserSchema
-        .findById({"_id": request.params.id}, (error, result) => {
+        .findById({"email": request.params.email}, (error, result) => {
             if (error){
                 response.status(500).send(error);
             }else if (result){
                 response.send(result);
             }else{
-                response.status(404).send({"id": request.params.id, "error": "Not Found"});
+                response.status(404).send({"email": request.params.email, "error": "Not Found"});
             }
         });
 });
@@ -51,7 +51,7 @@ router.get('/:id', (request, response, next) =>{
 router.post('/', (request, response, next) =>{
     let userJSON = request.body;
     if (!userJSON.name || !userJSON.email)
-       HandleError(response, 'Missing Information', 'Form Data Missing', 500);
+        HandleError(response, 'Missing Information', 'Form Data Missing', 500);
     else{
         let user = new UserSchema({
             name: userJSON.name,
@@ -59,16 +59,16 @@ router.post('/', (request, response, next) =>{
             password: userJSON.password
         });
         user.save( (error) => {
-          if (error){
-              response.send({"error": error});
-          }else{
-              response.send({"id": user.id});
-          }
-      });
-  }
+            if (error){
+                response.send({"error": error});
+            }else{
+                response.send({"id": user.id});
+            }
+        });
+    }
 });
 
-//Modifies a book with the given id
+//Modifies a user with the given id
 router.patch('/:id', (request, response, next) => {
     UserSchema
         .findById(request.params.id, (error, result) => {
