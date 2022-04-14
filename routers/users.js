@@ -9,8 +9,8 @@ function HandleError(response, reason, message, code){
 
 //Gets all the users ---
 router.get('/', (request, response, next)=>{
-    let name = request.query['name'];
-    if (name){
+    let word = request.query['name'];
+    if (word){
         UserSchema
             .find({"email": name})
             .exec( (error, users) =>{
