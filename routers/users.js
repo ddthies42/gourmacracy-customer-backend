@@ -1,6 +1,9 @@
 let express = require('express');
 let router = express.Router();
 let UserSchema = require('../models/users');
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+
 
 function HandleError(response, reason, message, code){
     console.log('ERROR: ' + reason);
@@ -47,26 +50,54 @@ router.get('/:email', (request, response, next) =>{
         });
 });
 
-//Insert a book
+//Register a User
 router.post('/', (request, response, next) =>{
     let userJSON = request.body;
     if (!userJSON.name || !userJSON.email)
-        HandleError(response, 'Missing Information', 'Form Data Missing', 500);
+       HandleError(response, 'Missing Information', 'Form Data Missing', 500);
     else{
+        bcrypt.hash(userJSON.password,10).then((hash) => {
         let user = new UserSchema({
             name: userJSON.name,
             email: userJSON.email,
-            password: userJSON.password
+            password: hash
         });
         user.save( (error) => {
-            if (error){
-                response.send({"error": error});
-            }else{
-                response.send({"id": user.id});
-            }
-        });
-    }
+          if (error){
+              response.send({"error": error});
+          }else{
+              response.send({"id": user.id});
+          }
+      });
+    });
+  }
 });
+
+//Sign-in
+router.post("/signin", (req, res, next) => {
+    let getUser;
+    userSchema.findOne({
+        email: req.body.email
+    }).then(user => {
+        if (!user) {
+            return res.status(401).json({
+                message: "Authentication failed"
+            });
+        }
+        return bcrypt.compare(req.body.password, user.password);
+    }).then(response => {
+        if (!response) {
+            return res.status(401).json({
+                message: "Authentication failed"
+            });
+        }
+    }).catch(err => {
+        return res.status(401).json({
+            message: "Authentication failed"
+        });
+    });
+});
+
 
 //Modifies a user with the given id
 router.patch('/:id', (request, response, next) => {
