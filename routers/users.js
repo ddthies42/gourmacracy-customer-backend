@@ -51,32 +51,30 @@ router.get('/:email', (request, response, next) =>{
 });
 
 //Register a User
-router.post('/', (request, response, next) =>{
-    let userJSON = request.body;
-    if (!userJSON.name || !userJSON.email)
-       HandleError(response, 'Missing Information', 'Form Data Missing', 500);
-    else{
-        bcrypt.hash(userJSON.password,10).then((hash) => {
-        let user = new UserSchema({
-            name: userJSON.name,
-            email: userJSON.email,
+router.post('/', (req, res, next) => {
+    bcrypt.hash(req.body.password, 10).then((hash) => {
+        const user = new UserSchema({
+            name: req.body.name,
+            email: req.body.email,
             password: hash
         });
-        user.save( (error) => {
-          if (error){
-              response.send({"error": error});
-          }else{
-              response.send({"id": user.id});
-          }
-      });
+        user.save().then((response) => {
+            res.status(201).json({
+                message: "User successfully registered!",
+                result: response
+            });
+        }).catch(error => {
+            res.status(500).json({
+                error: error
+            });
+        });
     });
-  }
 });
 
 //Sign-in
-router.post('/signin', (req, res, next) => {
+router.post("/signin", (req, res, next) => {
     let getUser;
-    userSchema.findOne({
+    UserSchema.findOne({
         email: req.body.email
     }).then(user => {
         if (!user) {
@@ -97,7 +95,6 @@ router.post('/signin', (req, res, next) => {
         });
     });
 });
-
 
 //Modifies a user with the given id
 router.patch('/:id', (request, response, next) => {
