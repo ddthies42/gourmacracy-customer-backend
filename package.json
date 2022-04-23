@@ -11,6 +11,7 @@
     "test": "echo \"Error: no test available\" && exit 1"
   },
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.16.1",
@@ -30,5 +31,8 @@
     "url": "https://github.com/StylesPRiley/gourmacracy-customer-backend/issues"
   },
   "homepage": "https://github.com/StylesPRiley/gourmacracy-customer-backend#readme",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "jsonwebtoken": "^8.5.1"
+  }
 }
