@@ -124,7 +124,7 @@ router.patch('/:id', (request, response, next) => {
         });
 });
 
-//Deletes a book with the given id
+//Deletes a user with the given id
 router.delete('/:id', (request, response, next) => {
     UserSchema
         .findById(request.params.id, (error, result)=>{
