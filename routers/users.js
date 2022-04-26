@@ -44,7 +44,7 @@ router.get('/:email', (request, response, next) =>{
                 response.status(500).send(error);
             }else if (result){
                 response.send(result);
-            }else{
+            }else{ 
                 response.status(404).send({"email": request.params.email, "error": "Not Found"});
             }
         });
