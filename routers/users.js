@@ -1,9 +1,6 @@
 let express = require('express');
 let router = express.Router();
 let UserSchema = require('../models/users');
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
-
 
 function HandleError(response, reason, message, code){
     console.log('ERROR: ' + reason);
@@ -12,10 +9,10 @@ function HandleError(response, reason, message, code){
 
 //Gets all the users ---
 router.get('/', (request, response, next)=>{
-    let name = request.query['name'];
-    if (name){
+    let word = request.query['name'];
+    if (word){
         UserSchema
-            .find({"name": name})
+            .find({"email": name})
             .exec( (error, users) =>{
                 if (error){
                     response.send({"error": error});
@@ -37,63 +34,38 @@ router.get('/', (request, response, next)=>{
 });
 
 //Gets the user with the given email (catch error of id not found)
-router.get('/:id', (request, response, next) =>{
+router.get('/:email', (request, response, next) =>{
     UserSchema
-        .findById({"_id": request.params.id}, (error, result) => {
+        .findById({"email": request.params.email}, (error, result) => {
             if (error){
                 response.status(500).send(error);
             }else if (result){
                 response.send(result);
-            }else{ 
-                response.status(404).send({"id": request.params.id, "error": "Not Found"});
+            }else{
+                response.status(404).send({"email": request.params.email, "error": "Not Found"});
             }
         });
 });
 
-//Register a User
-router.post('/', (req, res, next) => {
-    bcrypt.hash(req.body.password, 10).then((hash) => {
-        const user = new UserSchema({
-            name: req.body.name,
-            email: req.body.email,
-            password: hash
+//Insert a book
+router.post('/', (request, response, next) =>{
+    let userJSON = request.body;
+    if (!userJSON.name || !userJSON.email)
+        HandleError(response, 'Missing Information', 'Form Data Missing', 500);
+    else{
+        let user = new UserSchema({
+            name: userJSON.name,
+            email: userJSON.email,
+            password: userJSON.password
         });
-        user.save().then((response) => {
-            res.status(201).json({
-                message: "User successfully registered!",
-                result: response
-            });
-        }).catch(error => {
-            res.status(500).json({
-                error: error
-            });
+        user.save( (error) => {
+            if (error){
+                response.send({"error": error});
+            }else{
+                response.send({"id": user.id});
+            }
         });
-    });
-});
-
-//Sign-in
-router.post("/signin", (req, res, next) => {
-    let getUser;
-    UserSchema.findOne({
-        email: req.body.email
-    }).then(user => {
-        if (!user) {
-            return res.status(401).json({
-                message: "Authentication failed"
-            });
-        }
-        return bcrypt.compare(req.body.password, user.password);
-    }).then(response => {
-        if (!response) {
-            return res.status(401).json({
-                message: "Authentication failed"
-            });
-        }
-    }).catch(err => {
-        return res.status(401).json({
-            message: "Authentication failed"
-        });
-    });
+    }
 });
 
 //Modifies a user with the given id
@@ -121,7 +93,7 @@ router.patch('/:id', (request, response, next) => {
         });
 });
 
-//Deletes a user with the given id
+//Deletes a book with the given id
 router.delete('/:id', (request, response, next) => {
     UserSchema
         .findById(request.params.id, (error, result)=>{
