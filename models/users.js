@@ -3,9 +3,7 @@ let Schema = mongoose.Schema;
 
 let UserSchema = new Schema({
 
-    firstName: String,
-
-    lastName: String,
+    name: String,
 
     email: {
         type: String,
