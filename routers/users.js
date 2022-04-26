@@ -47,7 +47,7 @@ router.get('/:email', (request, response, next) =>{
         });
 });
 
-//Insert a book
+//Insert a user
 router.post('/', (request, response, next) =>{
     let userJSON = request.body;
     if (!userJSON.name || !userJSON.email)
@@ -93,7 +93,7 @@ router.patch('/:id', (request, response, next) => {
         });
 });
 
-//Deletes a book with the given id
+//Deletes a user with the given id
 router.delete('/:id', (request, response, next) => {
     UserSchema
         .findById(request.params.id, (error, result)=>{
