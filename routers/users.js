@@ -34,15 +34,15 @@ router.get('/', (request, response, next)=>{
 });
 
 //Gets the user with the given email (catch error of id not found)
-router.get('/:email', (request, response, next) =>{
+router.get('/:id', (request, response, next) =>{
     UserSchema
-        .findById({"email": request.params.email}, (error, result) => {
+        .findById({"_id": request.params.id}, (error, result) => {
             if (error){
                 response.status(500).send(error);
             }else if (result){
                 response.send(result);
             }else{
-                response.status(404).send({"email": request.params.email, "error": "Not Found"});
+                response.status(404).send({"id": request.params.id, "error": "Not Found"});
             }
         });
 });
