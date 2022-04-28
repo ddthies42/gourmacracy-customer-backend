@@ -1,6 +1,7 @@
 let express = require('express');
 let router = express.Router();
 let UserSchema = require('../models/users');
+const bcrypt = require("bcrypt");
 
 function HandleError(response, reason, message, code){
     console.log('ERROR: ' + reason);
@@ -47,25 +48,50 @@ router.get('/:id', (request, response, next) =>{
         });
 });
 
-//Insert a user
-router.post('/', (request, response, next) =>{
-    let userJSON = request.body;
-    if (!userJSON.name || !userJSON.email)
-        HandleError(response, 'Missing Information', 'Form Data Missing', 500);
-    else{
-        let user = new UserSchema({
-            name: userJSON.name,
-            email: userJSON.email,
-            password: userJSON.password
+//Register a User
+router.post('/', (req, res, next) => {
+    bcrypt.hash(req.body.password, 10).then((hash) => {
+        const user = new UserSchema({
+            name: req.body.name,
+            email: req.body.email,
+            password: hash
         });
-        user.save( (error) => {
-            if (error){
-                response.send({"error": error});
-            }else{
-                response.send({"id": user.id});
-            }
+        user.save().then((response) => {
+            res.status(201).json({
+                message: "User successfully registered!",
+                result: response
+            });
+        }).catch(error => {
+            res.status(500).json({
+                error: error
+            });
         });
-    }
+    });
+});
+
+//Sign-in
+router.post("/signin", (req, res, next) => {
+    let getUser;
+    UserSchema.findOne({
+        email: req.body.email
+    }).then(user => {
+        if (!user) {
+            return res.status(401).json({
+                message: "Authentication failed"
+            });
+        }
+        return bcrypt.compare(req.body.password, user.password);
+    }).then(response => {
+        if (!response) {
+            return res.status(401).json({
+                message: "Authentication failed"
+            });
+        }
+    }).catch(err => {
+        return res.status(401).json({
+            message: "Authentication failed"
+        });
+    });
 });
 
 //Modifies a user with the given id
