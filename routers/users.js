@@ -2,6 +2,7 @@ let express = require('express');
 let router = express.Router();
 let UserSchema = require('../models/users');
 const bcrypt = require("bcrypt");
+const jwt = require('jsonwebtoken');
 
 function HandleError(response, reason, message, code){
     console.log('ERROR: ' + reason);
