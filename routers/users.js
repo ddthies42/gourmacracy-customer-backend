@@ -48,12 +48,7 @@ router.get('/:id', (request, response, next) =>{
         });
 });
 
-book.save( (error) => {
-    if (error){
-        response.send({"error": error});
-    }else{
-        response.send({"id": book.id});
-    }
+
 
 //Register a User
 router.post('/', (req, res, next) => {
