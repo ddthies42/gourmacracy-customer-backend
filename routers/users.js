@@ -48,6 +48,13 @@ router.get('/:id', (request, response, next) =>{
         });
 });
 
+book.save( (error) => {
+    if (error){
+        response.send({"error": error});
+    }else{
+        response.send({"id": book.id});
+    }
+
 //Register a User
 router.post('/', (req, res, next) => {
     bcrypt.hash(req.body.password, 10).then((hash) => {
@@ -56,14 +63,13 @@ router.post('/', (req, res, next) => {
             email: req.body.email,
             password: hash
         });
-        user.save().then((response) => {
-            res.status(201).json({
-                message: "User successfully registered!",
-                result: response
-            });
-        }).catch(error => {
-            res.status(500).json({
-                error: error
+        user.save( (error) => {
+            if (error){
+                response.send({"error": error});
+            }else{
+                response.send({"id": user.name});
+            }
+       
             });
         });
     });
