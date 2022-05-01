@@ -90,6 +90,7 @@ router.post("/signin", (req, res, next) => {
         return res.status(401).json({
             message: "Authentication failed"
         });
+        });
     });
 });
 
@@ -138,3 +139,4 @@ router.delete('/:id', (request, response, next) => {
 });
 
 module.exports = router;
+
