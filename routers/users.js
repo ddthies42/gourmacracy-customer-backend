@@ -9,7 +9,7 @@ function HandleError(response, reason, message, code){
     response.status(code || 500).json({"error": message});
 }
 
-//Gets all the users ---
+//Gets all the users
 router.get('/', (request, response, next)=>{
     let name = request.query['name'];
     if (name){
