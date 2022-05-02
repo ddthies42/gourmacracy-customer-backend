@@ -2,14 +2,13 @@ let express = require('express');
 let router = express.Router();
 let UserSchema = require('../models/users');
 const bcrypt = require("bcrypt");
-const jwt = require('jsonwebtoken');
 
 function HandleError(response, reason, message, code){
     console.log('ERROR: ' + reason);
     response.status(code || 500).json({"error": message});
 }
 
-//Gets all the users---
+//Gets all the users ---
 router.get('/', (request, response, next)=>{
     let name = request.query['name'];
     if (name){
@@ -49,8 +48,6 @@ router.get('/:id', (request, response, next) =>{
         });
 });
 
-
-
 //Register a User
 router.post('/', (req, res, next) => {
     bcrypt.hash(req.body.password, 10).then((hash) => {
@@ -59,12 +56,16 @@ router.post('/', (req, res, next) => {
             email: req.body.email,
             password: hash
         });
-        user.save( (error) => {
-            if (error){
-                response.send({"error": error});
-            }else{
-                response.send({"id": user.name});
-            };
+        user.save().then((response) => {
+            res.status(201).json({
+                message: "User successfully registered!",
+                result: response
+            });
+        }).catch(error => {
+            res.status(500).json({
+                error: error
+            });
+        });
     });
 });
 
@@ -89,7 +90,6 @@ router.post("/signin", (req, res, next) => {
     }).catch(err => {
         return res.status(401).json({
             message: "Authentication failed"
-        });
         });
     });
 });
@@ -139,4 +139,3 @@ router.delete('/:id', (request, response, next) => {
 });
 
 module.exports = router;
-
