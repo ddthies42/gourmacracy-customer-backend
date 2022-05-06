@@ -49,7 +49,7 @@ router.get('/:id', (request, response, next) =>{
 });
 
 //Register a User
-router.post('/', (req, res, next) => {
+router.post('/', (req, response, next) => {
     bcrypt.hash(req.body.password, 10).then((hash) => {
         const user = new UserSchema({
             name: req.body.name,
