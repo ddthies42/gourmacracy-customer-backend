@@ -61,6 +61,7 @@ router.post('/', (req, res, next) => {
                 response.send({"error": error});
             }else{
                 response.send({"id": user.name});
+                alert("Congratulations " + user.name + " you are officially registered with Gourmacracy!");
 
             }
         });
