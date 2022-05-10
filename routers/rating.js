@@ -8,6 +8,7 @@ function HandleError(response, reason, message, code){
     response.status(code || 500).json({"error": message});
 }
 
+<<<<<<< HEAD
 // Gets all the menu items
 router.get('/', (request, response, next)=>{
     let name = request.query['menuItem'];
@@ -33,6 +34,9 @@ router.get('/', (request, response, next)=>{
             });
     }
 });
+=======
+
+>>>>>>> parent of c016543 (Added get for menu items)
 
 // Add a menu item
 router.post('/', (req, response, next) => {
