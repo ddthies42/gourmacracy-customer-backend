@@ -5,9 +5,7 @@ let MenuSchema = new Schema({
 
     menuItem: String,
 
-    points: Number,
-
-    numRatings: Number
+    points: Number
 
 });
 
