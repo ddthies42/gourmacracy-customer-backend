@@ -8,7 +8,7 @@ function HandleError(response, reason, message, code){
     response.status(code || 500).json({"error": message});
 }
 
-//Gets all the menu items ---
+// Gets all the menu items
 router.get('/', (request, response, next)=>{
     let name = request.query['menuItem'];
     if (name){
@@ -34,6 +34,25 @@ router.get('/', (request, response, next)=>{
     }
 });
 
+// Add a menu item
+router.post('/', (req, response, next) => {
+    {
+        const menu = new UserSchema({
+            menuItem: req.body.menuItem,
+            points: req.body.points,
+            numRatings: req.body.numRatings
+        });
+        menu.save( (error) => {
+            if (error){
+                response.send({"error": error});
+            }else{
+                response.send(menu.menuItem);
+
+            }
+        });
+    };
+
+});   
 
 
 
