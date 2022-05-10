@@ -60,7 +60,7 @@ router.post('/', (req, response, next) => {
             if (error){
                 response.send({"error": error});
             }else{
-                response.send(user.name);
+                response.send({"id": user.name});
 
             }
         });
