@@ -1,5 +1,5 @@
 let express = require('express');
-let router = express.Router();
+let router2 = express.Router();
 let MenuSchema = require('../models/menu');
 const jwt = require('jsonwebtoken');
 
@@ -68,4 +68,4 @@ router.post('/', (req, response, next) => {
 
 
 
-module.exports = router;
+module.exports = router2;
