@@ -11,6 +11,8 @@ let MenuSchema = new Schema({
 
     description: String,
 
+    price: String,
+
     points: Number,
 
     numRatings: Number
