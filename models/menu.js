@@ -15,4 +15,4 @@ let MenuSchema = new Schema({
 
 
 
-module.exports = mongoose.model('MenuItem', MenuSchema);
+module.exports = mongoose.model('menuItem', MenuSchema);
