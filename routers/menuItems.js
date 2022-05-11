@@ -70,31 +70,9 @@ router.post('/', (request, response, next) =>{
     }
 });
 
-
-//login page: storing and comparing email and password
-app.post('/signin', function (req, response) {
-    db.User.findOne({
-         where: {
-             email: req.body.email
-                }
-    }).then(function (user) {
-        if (!user) {
-           response.send('Email not found!');
-        } else {
-bcrypt.compare(req.body.password, user.password, function (err, result) {
-       if (result == true) {
-           response.send('Login Successful!');
-       } else {
-        response.send('Incorrect password');
-       }
-     });
-    }
- });
-});
-
-//Modifies a user with the given id
+//Modifies a menu item with the given id
 router.patch('/:id', (request, response, next) => {
-    UserSchema
+    MenuSchema
         .findById(request.params.id, (error, result) => {
             if (error) {
                 response.status(500).send(error);
@@ -105,11 +83,11 @@ router.patch('/:id', (request, response, next) => {
                 for (let field in request.body){
                     result[field] = request.body[field];
                 }
-                result.save((error, user)=>{
+                result.save((error, menuItem)=>{
                     if (error){
                         response.status(500).send(error);
                     }
-                    response.send(user);
+                    response.send(menuItem);
                 });
             }else{
                 response.status(404).send({"id": request.params.id, "error":  "Not Found"});
@@ -117,9 +95,9 @@ router.patch('/:id', (request, response, next) => {
         });
 });
 
-//Deletes a user with the given id
+//Deletes a menu item with the given id
 router.delete('/:id', (request, response, next) => {
-    UserSchema
+    MenuSchema
         .findById(request.params.id, (error, result)=>{
             if (error) {
                 response.status(500).send(error);
