@@ -68,36 +68,25 @@ router.post('/', (req, response, next) => {
 
 });
 
-
-
-
-//Sign-in
-router.post("/signin", (req, res, next) => {
-    let getUser;
-    
-    UserSchema.findOne({
-        email: req.body.email
-    }).then(user => {
+//login page: storing and comparing email and password
+app.post('/signin', function (req, response) {
+    db.User.findOne({
+         where: {
+             email: req.body.email
+                }
+    }).then(function (user) {
         if (!user) {
-            return res.status(401).json({
-                message: "Authentication failed"
-            });
-        }
-        return bcrypt.compare(req.body.password, user.password);
-    }).then(response => {
-        if (!response) {
-            return res.status(401).json({
-                message: "Authentication failed"
-            });
-        }
-        else {
-            res.send("Login Successful!");
-        }
-    }).catch(err => {
-        return res.status(401).json({
-            message: "Authentication failed"
-        });
-    });
+           response.send('Email not found!');
+        } else {
+bcrypt.compare(req.body.password, user.password, function (err, result) {
+       if (result == true) {
+           response.send('Login Successful!');
+       } else {
+        response.send('Incorrect password');
+       }
+     });
+    }
+ });
 });
 
 //Modifies a user with the given id
