@@ -3,7 +3,11 @@ let Schema = mongoose.Schema;
 
 let MenuSchema = new Schema({
 
-    itemName: String,
+    itemName: {
+        type: String,
+
+        unique: true
+    },
 
     description: String,
 

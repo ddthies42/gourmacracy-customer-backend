@@ -33,9 +33,9 @@ router.get('/', (request, response, next)=>{
     }
 });
 
-//Gets the user with the given email (catch error of id not found)
+//Gets the menu item with the given id (catch error of id not found)
 router.get('/:id', (request, response, next) =>{
-    UserSchema
+    MenuSchema
         .findById({"_id": request.params.id}, (error, result) => {
             if (error){
                 response.status(500).send(error);
@@ -47,7 +47,7 @@ router.get('/:id', (request, response, next) =>{
         });
 });
 
-//Register a User
+//Add a menu item
 router.post('/', (req, response, next) => {
     bcrypt.hash(req.body.password, 10).then((hash) => {
         const user = new UserSchema({
