@@ -1,5 +1,5 @@
 let express = require('express');
-let router2 = express.Router();
+let router = express.Router();
 let MenuSchema = require('../models/menu');
 
 function HandleError(response, reason, message, code){
@@ -20,4 +20,4 @@ function HandleError(response, reason, message, code){
 
 
 
-module.exports = router2;
+module.exports = router;
