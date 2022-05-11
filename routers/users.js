@@ -75,6 +75,7 @@ router.post('/', (req, response, next) => {
 //Sign-in
 router.post("/signin", (req, res, next) => {
     let getUser;
+    
     UserSchema.findOne({
         email: req.body.email
     }).then(user => {
