@@ -50,22 +50,21 @@ router.get('/:id', (request, response, next) =>{
 //Add a menu item
 router.post('/', (request, response, next) =>{
     let menuJSON = request.body;
-    if (!menuJSON.itemName || !menuJSON.title)
+    if (!menuJSON.itemName || !menuJSON.price)
         HandleError(response, 'Missing Information', 'Form Data Missing', 500);
     else{
-        let book = new BookSchema({
-            title: bookJSON.title,
-            description: bookJSON.description,
-            year: bookJSON.year || 0,
-            author: bookJSON.author,
-            price : bookJSON.price || 0,
-            hardCover: bookJSON.hardCover || true
+        let menuItem = new MenuSchema({
+            itemName: menuJSON.itemName,
+            description: menuJSON.description,
+            price: menuJSON.price,
+            points: menuJSON.points,
+            numRatings : menuJSON.numRatings 
         });
-        book.save( (error) => {
+        menuItem.save( (error) => {
             if (error){
                 response.send({"error": error});
             }else{
-                response.send({"id": book.id});
+                response.send({"id": menuItem.id});
             }
         });
     }
