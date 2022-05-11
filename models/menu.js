@@ -3,7 +3,9 @@ let Schema = mongoose.Schema;
 
 let MenuSchema = new Schema({
 
-    menuItem: String,
+    itemName: String,
+
+    description: String,
 
     points: Number,
 
@@ -13,4 +15,4 @@ let MenuSchema = new Schema({
 
 
 
-module.exports = mongoose.model('Menu', MenuSchema);
+module.exports = mongoose.model('MenuItem', MenuSchema);
