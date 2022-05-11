@@ -64,7 +64,7 @@ router.post('/', (request, response, next) =>{
             if (error){
                 response.send({"error": error});
             }else{
-                response.send({"id": menuItem.id});
+                response.send(menuItem.itemName);
             }
         });
     }
