@@ -90,6 +90,9 @@ router.post("/signin", (req, res, next) => {
                 message: "Authentication failed"
             });
         }
+        else {
+            res.send("Login Successful!");
+        }
     }).catch(err => {
         return res.status(401).json({
             message: "Authentication failed"
