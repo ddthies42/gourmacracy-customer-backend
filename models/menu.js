@@ -9,6 +9,8 @@ let MenuSchema = new Schema({
         unique: true
     },
 
+    category: String,
+
     description: String,
 
     price: String,
