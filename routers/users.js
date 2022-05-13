@@ -69,7 +69,7 @@ router.post('/', (req, response, next) => {
 });
 
 //login page: storing and comparing email and password
-app.post('/signin', function (req, response) {
+router.post('/signin', function (req, response) {
     db.User.findOne({
          where: {
              email: req.body.email
