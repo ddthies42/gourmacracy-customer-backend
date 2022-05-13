@@ -11,7 +11,7 @@ let MenuSchema = new Schema({
 
     catagory: {
         type: String,
-        enum: ['Appetizer','Salad','Entree','Dessert'],
+        enum: ['Appetizer','Salad','Entree','Dessert', 'Optional'],
     },
 
     description: String,
