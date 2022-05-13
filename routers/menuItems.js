@@ -55,6 +55,7 @@ router.post('/', (request, response, next) =>{
     else{
         let menuItem = new MenuSchema({
             itemName: menuJSON.itemName,
+            category: menuJSON.category,
             description: menuJSON.description,
             price: menuJSON.price,
             points: menuJSON.points,

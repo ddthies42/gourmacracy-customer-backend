@@ -9,7 +9,10 @@ let MenuSchema = new Schema({
         unique: true
     },
 
-    category: String,
+    catagory: {
+        type: String,
+        enum: ['Appetizer','Salad','Entree','Dessert'],
+    },
 
     description: String,
 
