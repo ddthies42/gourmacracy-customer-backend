@@ -20,7 +20,12 @@ let MenuSchema = new Schema({
 
     description: String,
 
-    price: String,
+    price: {
+        type: Number,
+
+        required: true,
+
+    },
 
     points: Number,
 
