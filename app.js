@@ -2,6 +2,7 @@
 
 var createError = require('http-errors');
 var express = require('express');
+const session = require('express-session');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -22,6 +23,7 @@ app.set('view engine', 'pug');
 
 app.use(cors());
 
+app.use(session({secret: 'magical'}));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
