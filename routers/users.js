@@ -2,14 +2,20 @@ let express = require('express');
 let router = express.Router();
 let UserSchema = require('../models/users');
 const bcrypt = require("bcrypt");
+app.use(session({secret: 'ssshhhhh',saveUninitialized: true,resave: true}));
+app.use(bodyParser.json());      
+const session = require('express-session');
+const bodyParser = require('body-parser');
 
 function HandleError(response, reason, message, code){
     console.log('ERROR: ' + reason);
     response.status(code || 500).json({"error": message});
 }
+var sess;
 
 //Gets all the users ---
 router.get('/', (request, response, next)=>{
+    sess = req.session;
     let name = request.query['name'];
     if (name){
         UserSchema
@@ -70,15 +76,18 @@ router.post('/', (req, response, next) => {
 
 //login page: storing and comparing email and password
 router.post('/signin', function (req, response) {
+    sess = req.session;
+    sess.email = req.body.email;
+    sess.password = req.body.password;
     db.User.findOne({
          where: {
-             email: req.body.email
+             email : sess.email
                 }
     }).then(function (user) {
         if (!user) {
            response.send('Email not found!');
         } else {
-bcrypt.compare(req.body.password, user.password, function (err, result) {
+bcrypt.compare(sess.password, user.password, function (err, result) {
        if (result == true) {
            response.send('Login Successful!');
        } else {
@@ -131,6 +140,17 @@ router.delete('/:id', (request, response, next) => {
                 response.status(404).send({"id": request.params.id, "error":  "Not Found"});
             }
         });
+});
+
+//logout
+router.get('/logout',(req,res) => {
+    req.session.destroy((err) => {
+        if(err) {
+            return console.log(err);
+        }
+        res.redirect('/');
+    });
+
 });
 
 module.exports = router;
