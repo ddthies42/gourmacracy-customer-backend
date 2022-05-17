@@ -14,9 +14,9 @@ var userRouter = require('./routers/users');
 var menuRouter = require('./routers/menuItems');
 
 // redis
-const redis = require('redis');
+/*const redis = require('redis');
 const redisStore = require('connect-redis')(session);
-const client  = redis.createClient();
+const client  = redis.createClient();*/
 const router = express.Router();
 
 var db = require('./db');
@@ -30,15 +30,15 @@ app.set('view engine', 'pug');
 
 app.use(cors());
 
-//app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }}))
+app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }, saveUninitialized: true, resave: true}))
 
 // Replaces previous session
-app.use(session({
+/*app.use(session({
   secret: 'keyboard cat',
   store: new redisStore({ host: 'localhost', port: 6379, client: client,ttl : 260}),
   saveUninitialized: false,
   resave: false
-}));
+}));*/
 
 app.use(bodyParser.json());   
 
