@@ -2,9 +2,6 @@ let express = require('express');
 let router = express.Router();
 let UserSchema = require('../models/users');
 const bcrypt = require("bcrypt");
-// app.use(session({secret: 'ssshhhhh',saveUninitialized: true,resave: true}));
-app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }}))
-app.use(bodyParser.json());      
 const session = require('express-session');
 const bodyParser = require('body-parser');
 
