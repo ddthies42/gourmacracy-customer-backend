@@ -2,7 +2,8 @@ let express = require('express');
 let router = express.Router();
 let UserSchema = require('../models/users');
 const bcrypt = require("bcrypt");
-app.use(session({secret: 'ssshhhhh',saveUninitialized: true,resave: true}));
+// app.use(session({secret: 'ssshhhhh',saveUninitialized: true,resave: true}));
+app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }}))
 app.use(bodyParser.json());      
 const session = require('express-session');
 const bodyParser = require('body-parser');
@@ -15,7 +16,6 @@ var sess;
 
 //Gets all the users ---
 router.get('/', (request, response, next)=>{
-    sess = req.session;
     let name = request.query['name'];
     if (name){
         UserSchema
@@ -77,8 +77,7 @@ router.post('/', (req, response, next) => {
 //login page: storing and comparing email and password
 router.post('/signin', function (req, response) {
     sess = req.session;
-    sess.email = req.body.email;
-    sess.password = req.body.password;
+    sess.logingin = "true";
     db.User.findOne({
          where: {
              email : sess.email
@@ -89,6 +88,8 @@ router.post('/signin', function (req, response) {
         } else {
 bcrypt.compare(sess.password, user.password, function (err, result) {
        if (result == true) {
+        sess.email = req.body.email;
+        sess.password = req.body.password;
            response.send('Login Successful!');
        } else {
         response.send('Incorrect password');
