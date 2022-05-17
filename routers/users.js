@@ -2,8 +2,6 @@ let express = require('express');
 let router = express.Router();
 let UserSchema = require('../models/users');
 const bcrypt = require("bcrypt");
-const session = require('express-session');
-const bodyParser = require('body-parser');
 
 function HandleError(response, reason, message, code){
     console.log('ERROR: ' + reason);
