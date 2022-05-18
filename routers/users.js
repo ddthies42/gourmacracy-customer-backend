@@ -51,6 +51,8 @@ router.get('/:id', (request, response, next) =>{
 
 //Register a User
 router.post('/', (req, response, next) => {
+    console.log("Hello!");
+    console.log(req);
     bcrypt.hash(req.body.password, 10).then((hash) => {
         const user = new UserSchema({
             name: req.body.name,
@@ -73,27 +75,52 @@ router.post('/', (req, response, next) => {
 router.post('/signin', function (req, response) {
     sess = req.session;
     sess.logingin = "true";
+    console.log(req.body.email)
     UserSchema
-    .findOne({
-         where: {
-             email : req.email
-                }
-    }).then(function (user) {
-        if (!user) {
-           response.send('Email not found!');
-        } else {
-bcrypt.compare(sess.password, user.password, function (err, result) {
-       if (result == true) {
-        sess.email = req.body.email;
-        sess.password = req.body.password;
-           response.send('Login Successful!');
-       } else {
-        response.send('Incorrect password');
-       }
-     });
-    }
+    .find({"email": req.body.email})
+    .exec( (error, userData) =>{
+        if (error){
+            response.send({"error": error});
+        }else{
+            if (!userData) {
+                           response.send('Email not found!');
+                        } else {
+                            user = userData[0];
+                            
+                            console.log(user);
+                            
+                bcrypt.compare(req.body.password, user.password, function (err, result) {
+                       if (result == true) {
+                        sess.user_id = user._id;
+                        console.log(user._id);
+                        
+                           response.send('Login Successful!');
+                       } else {
+                        response.send('Incorrect password');
+                       }
+                     });
+                   // });
+                   }
+            console.log(user);
+            
+        }
+    });
+       
+//         if (!user) {
+//            response.send('Email not found!');
+//         } else {
+// bcrypt.compare(sess.password, user.password, function (err, result) {
+//        if (result == true) {
+//         sess.email = req.body.email;
+//         sess.password = req.body.password;
+//            response.send('Login Successful!');
+//        } else {
+//         response.send('Incorrect password');
+//        }
+//      });
+ //   }
  });
-});
+
 
 //Modifies a user with the given id
 router.patch('/:id', (request, response, next) => {
