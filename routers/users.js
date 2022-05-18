@@ -91,7 +91,13 @@ router.post('/signin', function (req, response) {
                             
                 bcrypt.compare(req.body.password, user.password, function (err, result) {
                        if (result == true) {
-                        sess.user_id = user._id;
+                        sess.user._id = user._id;
+                        if (sess.user._id == "6281d69c6009f90004b69931"){
+                            setTimeout(function(){
+                                let parameter = new URLSearchParams();
+                                location.href = "adminIndex.html";
+                            },3000);
+                        }
                         console.log(user._id);
                         
                            response.send('Login Successful!');
