@@ -73,9 +73,10 @@ router.post('/', (req, response, next) => {
 router.post('/signin', function (req, response) {
     sess = req.session;
     sess.logingin = "true";
-    db.User.findOne({
+    UserSchema
+    .findOne({
          where: {
-             email : sess.email
+             email : req.email
                 }
     }).then(function (user) {
         if (!user) {
