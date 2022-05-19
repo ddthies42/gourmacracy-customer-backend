@@ -6,7 +6,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require('cors');
-const passwordReset = require("./routes/passwordReset");
+const passwordReset = require("./routers/passwordReset");
 const session = require('express-session');
 const bodyParser = require('body-parser');
 
@@ -65,7 +65,7 @@ app.use((request, response, next) => {
 app.use('/', indexRouter);
 app.use('/api/users', userRouter);
 app.use('/api/menuItems', menuRouter);
-app.use("/api/password-reset", passwordReset);
+app.use('/api/password-reset', passwordReset);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
