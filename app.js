@@ -6,6 +6,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require('cors');
+const passwordReset = require("./routes/passwordReset");
 const session = require('express-session');
 const bodyParser = require('body-parser');
 
@@ -29,6 +30,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 app.use(cors());
+app.use("/api/password-reset", passwordReset);
 
 app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }, saveUninitialized: true, resave: true}))
 
