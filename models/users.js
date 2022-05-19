@@ -28,17 +28,17 @@ let UserSchema = new Schema({
 
 
 
-// module.exports = mongoose.model('User', UserSchema);
+ module.exports = mongoose.model('User', UserSchema);
 
-const User = mongoose.model("User", UserSchema);
+//const User = mongoose.model("User", UserSchema);
 
-const validate = (User) => {
-    const schema = Joi.object({
-        name: Joi.string().required(),
-        email: Joi.string().email().required(),
-        password: Joi.string().required(),
-    });
-    return schema.validate(User);
-};
+//const validate = (User) => {
+  //  const schema = Joi.object({
+    //    name: Joi.string().required(),
+      //  email: Joi.string().email().required(),
+       // password: Joi.string().required(),
+   // });
+   // return schema.validate(User);
+//};
 
-module.exports = { User, validate };
+//module.exports = { User, validate };
