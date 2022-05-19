@@ -55,6 +55,8 @@ router.post("/:userId/:token", async (req, res) => {
         res.send("password reset sucessfully.");
     } catch (error) {
         res.send("An error occured");
+
+        
         console.log(error);
     }
 });
