@@ -94,10 +94,6 @@ router.post('/signin', function (req, response) {
                         sess._id = user._id;
                         console.log(user._id);
                         if (sess._id == "6281d69c6009f90004b69931"){
-                            setTimeout(function(){
-                                let parameter = new URLSearchParams();
-                                location.href = "adminIndex.html";
-                            },3000);
                             response.send('Admin Login Successful!');
                         } else {
                            response.send('Login Successful!');
