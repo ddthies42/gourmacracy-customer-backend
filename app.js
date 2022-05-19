@@ -30,7 +30,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 app.use(cors());
-app.use("/api/password-reset", passwordReset);
+
 
 app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }, saveUninitialized: true, resave: true}))
 
@@ -65,6 +65,7 @@ app.use((request, response, next) => {
 app.use('/', indexRouter);
 app.use('/api/users', userRouter);
 app.use('/api/menuItems', menuRouter);
+app.use("/api/password-reset", passwordReset);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
