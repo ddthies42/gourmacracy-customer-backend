@@ -100,7 +100,8 @@ router.post('/signin', function (req, response) {
                             }
 
                        } else {
-                        response.send('Incorrect password');
+                        response.send('Unable to login with this email address and password. ' +
+                            'Check your login information and try again.');
                        }
                      });
                    // });
