@@ -15,7 +15,7 @@ router.post("/", async (req, res) => {
 
         .findOne({ email: req.body.email });
         if (!User)
-            return res.status(400).send("user with given email doesn't exist");
+            return res.status(400).send("User with given email doesn't exist");
 
         let token = await Token.findOne({ userId: User._id });
         if (!token) {
@@ -27,9 +27,9 @@ router.post("/", async (req, res) => {
 
         const link = `${process.env.BASE_URL}/password-reset/${User._id}/${token.token}`;
         await sendEmail(User.email, "Password reset", link);
-        res.send("password reset link sent to your email account");
+        res.send("Password reset link sent to your email account");
     } catch (error) {
-        res.send("An error occured");
+        res.send("An error occurred");
         console.log(error);
     }
 });
@@ -41,7 +41,7 @@ router.post("/:userId/:token", async (req, res) => {
        // if (error) return res.status(400).send(error.details[0].message);
         UserSchema
         .findById(req.params.userId);
-        if (!User) return res.status(400).send("invalid link or expired");
+        if (!User) return res.status(400).send("Invalid link or expired");
 
         const token = await Token.findOne({
             userId: User._id,
@@ -52,9 +52,9 @@ router.post("/:userId/:token", async (req, res) => {
         User.password = req.body.password;
         await User.save();
         await token.delete();
-        res.send("password reset sucessfully.");
+        res.send("Password reset successfully.");
     } catch (error) {
-        res.send("An error occured");
+        res.send("An error occurred");
 
         
         console.log(error);
