@@ -1,7 +1,7 @@
 let express = require('express');
 let router = express.Router();
-let UserSchema = require('../models/users');
-const bcrypt = require("bcrypt");
+const { User, validate } = require('../models/users');
+const bcrypt = require('bcrypt');
 
 function HandleError(response, reason, message, code){
     console.log('ERROR: ' + reason);
@@ -13,7 +13,7 @@ var sess;
 router.get('/', (request, response, next)=>{
     let name = request.query['name'];
     if (name){
-        UserSchema
+        User
             .find({"name": name})
             .exec( (error, users) =>{
                 if (error){
@@ -23,7 +23,7 @@ router.get('/', (request, response, next)=>{
                 }
             });
     }else{
-        UserSchema
+        User
             .find()
             .exec( (error, users) =>{
                 if (error){
@@ -37,7 +37,7 @@ router.get('/', (request, response, next)=>{
 
 //Gets the user with the given email (catch error of id not found)
 router.get('/:id', (request, response, next) =>{
-    UserSchema
+    User
         .findById({"_id": request.params.id}, (error, result) => {
             if (error){
                 response.status(500).send(error);
@@ -54,7 +54,7 @@ router.post('/', (req, response, next) => {
     console.log("Hello!");
     console.log(req);
     bcrypt.hash(req.body.password, 10).then((hash) => {
-        const user = new UserSchema({
+        const user = new User({
             name: req.body.name,
             email: req.body.email,
             password: hash
@@ -76,7 +76,7 @@ router.post('/signin', function (req, response) {
     sess = req.session;
     sess.logingin = "true";
     console.log(req.body.email)
-    UserSchema
+    User
     .find({"email": req.body.email})
     .exec( (error, userData) =>{
         if (error){
@@ -132,7 +132,7 @@ router.post('/signin', function (req, response) {
 
 //Modifies a user with the given id
 router.patch('/:id', (request, response, next) => {
-    UserSchema
+    User
         .findById(request.params.id, (error, result) => {
             if (error) {
                 response.status(500).send(error);
@@ -157,7 +157,7 @@ router.patch('/:id', (request, response, next) => {
 
 //Deletes a user with the given id
 router.delete('/:id', (request, response, next) => {
-    UserSchema
+    User
         .findById(request.params.id, (error, result)=>{
             if (error) {
                 response.status(500).send(error);
