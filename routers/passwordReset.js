@@ -29,7 +29,7 @@ router.post("/", async (req, res) => {
 
         res.send("password reset link sent to your email account");
     } catch (error) {
-        res.send("An error occured");
+        res.send("An error occurred");
         console.log(error);
     }
 });
