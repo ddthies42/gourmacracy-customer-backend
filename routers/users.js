@@ -186,7 +186,7 @@ router.get('/logout',(req,res) => {
 // Add order number + ,
 
 //method to append a user's orders array in database
-// router.post('/purchase', (request, response, next) => {
+// router.patch('/purchase', (request, response, next) => {
 // User
 //     .findOneAndUpdate(request.params.id, (error, result) => {
 //         if (error) {
