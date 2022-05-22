@@ -182,33 +182,35 @@ router.get('/logout',(req,res) => {
 
 });
 
-// This method should be a post
+// This method should be a patch
 // Add order number + ,
 
-//method to append a user's orders array in database
-// router.patch('/purchase', (request, response, next) => {
-// User
-//     .findOneAndUpdate(request.params.id, (error, result) => {
-//         if (error) {
-//             response.status(500).send(error);
-//         }else if (result){
-//             if (request.body._id){
-//                 delete request.body._id;
-//             }
-//             for (let field in request.body){
-//                 result[field] = request.body[field];
-//             }
-//             result.save((error, user)=>{
-//                 if (error){
-//                     response.status(500).send(error);
-//                 }
-//                 response.send(user);
-//             });
-//         }else{
-//             response.status(404).send({"id": request.params.id, "error":  "Not Found"});
-//         }
-//     });
-// });
+// method to append a user's orders array in database
+router.patch('/purchase/:id', (request, response) => {
+    const { id } = request.params
+    const changes = request.body
+    User
+    .findOneAndUpdate(request.params.id, (error, result) => {
+        if (error) {
+            response.status(500).send(error);
+        }else if (result){
+            if (changes._id){
+                delete changes._id;
+            }
+            for (let field in changes){
+                result[field] += changes[field] + " ";
+            }
+            result.save((error, user)=>{
+                if (error){
+                    response.status(500).send(error);
+                }
+                response.send(user);
+            });
+        }else{
+            response.status(404).send({"id": request.params.id, "error":  "Not Found"});
+        }
+    });
+});
 
 
 
