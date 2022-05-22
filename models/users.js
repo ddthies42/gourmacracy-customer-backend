@@ -1,3 +1,4 @@
+const Joi = require('joi');
 const mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 
@@ -23,7 +24,15 @@ let UserSchema = new Schema({
 
      type: String,
      required: true
+    },
+
+    orders: {
+        type: String,
+        default: null
+
     }
+
+
 });
 
 
@@ -37,6 +46,7 @@ const validate = (user) => {
         name: Joi.string().required(),
         email: Joi.string().email().required(),
         password: Joi.string().required(),
+        orders: Joi.string().required()
     });
     return schema.validate(User);
 };
