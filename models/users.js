@@ -28,7 +28,7 @@ let UserSchema = new Schema({
 
     orders: {
         type: String,
-        default: null
+        default: ""
 
     }
 
