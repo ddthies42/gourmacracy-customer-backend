@@ -182,4 +182,44 @@ router.get('/logout',(req,res) => {
 
 });
 
+//method to append a user's orders array in database
+// router.post('/purchase', (request, response, next) => {
+// User
+//     .findOneAndUpdate(request.params.id, (error, result) => {
+//         if (error) {
+//             response.status(500).send(error);
+//         }else if (result){
+//             if (request.body._id){
+//                 delete request.body._id;
+//             }
+//             for (let field in request.body){
+//                 result[field] = request.body[field];
+//             }
+//             result.save((error, user)=>{
+//                 if (error){
+//                     response.status(500).send(error);
+//                 }
+//                 response.send(user);
+//             });
+//         }else{
+//             response.status(404).send({"id": request.params.id, "error":  "Not Found"});
+//         }
+//     });
+// });
+
+
+
 module.exports = router;
+
+
+// Friend.findOneAndUpdate(
+//     { _id: req.body.id }, 
+//     { $push: { friends: objFriends  } },
+//    function (error, success) {
+//          if (error) {
+//              console.log(error);
+//          } else {
+//              console.log(success);
+//          }
+//      });
+//  )
