@@ -182,6 +182,9 @@ router.get('/logout',(req,res) => {
 
 });
 
+// This method should be a post
+// Add order number + ,
+
 //method to append a user's orders array in database
 // router.post('/purchase', (request, response, next) => {
 // User
