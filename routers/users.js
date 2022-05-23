@@ -195,10 +195,9 @@ router.patch('/purchase/:id', (request, response) => {
             response.status(500).send(error);
         }else if (result){
             if (changes._id){
-                delete changes._id;
-            }
-            for (let field in changes){
-                result[field] += changes[field] + " ";
+                for (let field in changes){
+                    result[field] += changes[field] + " ";
+                }
             }
             result.save((error, user)=>{
                 if (error){
