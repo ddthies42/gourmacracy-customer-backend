@@ -47,16 +47,16 @@ router.get('/:id', (request, response, next) =>{
         });
 });
 
-// Gets the menu item with the given item name and returns the _id
-router.get('/:itemName', (request, response, next) =>{
+// Gets the menu item and returns the _id
+router.get('/itemId/:id', (request, response, next) =>{
     MenuSchema
-        .findById({"itemName": request.params.itemName}, (error, result) => {
+        .findById({"_id": request.params.id}, (error, result) => {
             if (error){
                 response.status(500).send(error);
             }else if (result){
                 response.send(request.params.id);
             }else{
-                response.status(404).send({"item": request.params.itemName, "error": "Not Found"});
+                response.status(404).send({"id": request.params.id, "error": "Not Found"});
             }
         });
 });
