@@ -26,11 +26,11 @@ let UserSchema = new Schema({
      required: true
     },
 
-    orders: {
-        type: String,
-        default: ""
+    orders: [{
+        type: String
+        
 
-    }
+    }]
 
 
 });
