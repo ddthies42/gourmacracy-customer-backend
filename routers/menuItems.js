@@ -115,6 +115,30 @@ router.patch('/:id', (request, response, next) => {
         });
 });
 
+//for adding ratings and comments to menu items.
+router.patch('/rating/:id', (request, response, next) => {
+    MenuSchema
+        .findById(request.params.id, (error, result) => {
+            if (error) {
+                response.status(500).send(error);
+            }else if (result){
+               for (let field in request.body){
+                    result[field] = result[field] + request.body[field];
+                }
+                result.save((error, user)=>{
+                    if (error){
+                        response.status(500).send(error);
+                    }
+                    response.send(menuItem);
+                });
+            }else{
+                response.status(404).send({"id": request.params.id, "error":  "Not Found"});
+            }
+        });
+});
+
+
+
 //Deletes a menu item with the given id
 router.delete('/:id', (request, response, next) => {
     MenuSchema
