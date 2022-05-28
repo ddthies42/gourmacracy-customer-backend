@@ -125,6 +125,7 @@ router.post('/signin', function (req, response) {
                             console.log(user._id);
                             if (sess._id == "6281d69c6009f90004b69931") {
                                response.send('Admin Login Successful!');
+                               response.send(sess._id);
                             } else {
                                response.send('Login Successful!');
                             }
