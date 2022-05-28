@@ -126,7 +126,7 @@ router.patch('/rating/:id', (request, response, next) => {
                     delete request.body._id;
                 }
                for (let field in request.body){
-                    result[field] = (result[field] + request.body[field]);
+                    result[field] = (parseInt(result[field]) + parseInt(request.body[field]));
                 }
                 result.save((error, menuItem)=>{
                     if (error){
