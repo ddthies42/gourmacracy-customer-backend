@@ -49,34 +49,6 @@ router.get('/:id', (request, response, next) =>{
         });
 });
 
-router.get('/:email', (request, response, next) =>{
-    User
-        .findById({"email": request.params.email}, (error, result) => {
-            if (error){
-                response.status(500).send(error);
-            }else if (result){
-                response.send(request.params.id);
-            }else{
-                response.status(404).send({"email": request.params.email, "error": "Not Found"});
-            }
-        });
-});
-
-
-// router.get('/itemId/:id', (request, response, next) =>{
-//     MenuSchema
-//         .findById({"_id": request.params.id}, (error, result) => {
-//             if (error){
-//                 response.status(500).send(error);
-//             }else if (result){
-//                 response.send(request.params.id);
-//             }else{
-//                 response.status(404).send({"id": request.params.id, "error": "Not Found"});
-//             }
-//         });
-// });
-
-
 //Register a User
 router.post('/', (req, response, next) => {
     console.log("Hello!");
@@ -120,8 +92,6 @@ router.post('/signin', function (req, response) {
                 bcrypt.compare(req.body.password, user.password, function (err, result) {
                        if (result == true) {
                             sess._id = user._id;
-                            sessionStorage.setItem("sess._id", sess._id);
-
                             console.log(user._id);
                             if (sess._id == "6281d69c6009f90004b69931") {
                                response.send('Admin Login Successful!');
