@@ -49,18 +49,18 @@ router.get('/:id', (request, response, next) =>{
         });
 });
 
-router.get('/:email', (request, response, next) =>{
-    User
-        .findById({"email": request.params.email}, (error, result) => {
-            if (error){
-                response.status(500).send(error);
-            }else if (result){
-                response.send(result._id);
-            }else{
-                response.status(404).send({"email": request.params.email, "error": "Not Found"});
-            }
-        });
-});
+// router.get('/:email', (request, response, next) =>{
+//     User
+//         .findById({"email": request.params.email}, (error, result) => {
+//             if (error){
+//                 response.status(500).send(error);
+//             }else if (result){
+//                 response.send(result._id);
+//             }else{
+//                 response.status(404).send({"email": request.params.email, "error": "Not Found"});
+//             }
+//         });
+// });
 
 
 // router.get('/itemId/:id', (request, response, next) =>{
@@ -124,7 +124,7 @@ router.post('/signin', function (req, response) {
 
                             console.log(user._id);
                             if (sess._id == "6281d69c6009f90004b69931") {
-                               response.send('Admin Login Successful!' + sess._id);
+                               response.send('Admin Login Successful!');
                             
                             } else {
                                response.send('Login Successful!');
