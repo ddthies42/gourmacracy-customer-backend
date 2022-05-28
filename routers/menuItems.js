@@ -125,7 +125,7 @@ router.patch('/rating/:id', (request, response, next) => {
                for (let field in request.body){
                     result[field] = result[field] + request.body[field];
                 }
-                result.save((error, user)=>{
+                result.save((error, menuItem)=>{
                     if (error){
                         response.status(500).send(error);
                     }
