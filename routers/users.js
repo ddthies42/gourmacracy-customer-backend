@@ -188,6 +188,32 @@ router.patch('/:id', (request, response, next) => {
         });
 });
 
+
+//Need to change this to take the user's id and add to a particular field
+router.patch('/purchase/:id', (request, response, next) => {
+    User
+        .findById(request.params.id, (error, result) => {
+            if (error) {
+                response.status(500).send(error);
+            }else if (result){
+               
+                    
+                
+                for (let field in request.body){
+                    result[field] = result[field] + request.body[field];
+                }
+                result.save((error, user)=>{
+                    if (error){
+                        response.status(500).send(error);
+                    }
+                    response.send(user);
+                });
+            }else{
+                response.status(404).send({"id": request.params.id, "error":  "Not Found"});
+            }
+        });
+});
+
 //Deletes a user with the given id
 router.delete('/:id', (request, response, next) => {
     User
@@ -222,30 +248,30 @@ router.get('/logout',(req,res) => {
 // Add order number + ,
 
 // method to append a user's orders array in database
-router.patch('/purchase/:id', (request, response) => {
-    const { id } = request.params
-    const changes = request.body
-    User
-    .findOneAndUpdate(request.params.id, (error, result) => {
-        if (error) {
-            response.status(500).send(error);
-        }else if (result){
-            if (changes._id){
-                for (let field in changes){
-                    result[field] += changes[field] + " ";
-                }
-            }
-            result.save((error, user)=>{
-                if (error){
-                    response.status(500).send(error);
-                }
-                response.send(user);
-            });
-        }else{
-            response.status(404).send({"id": request.params.id, "error":  "Not Found"});
-        }
-    });
-});
+// router.patch('/purchase/:id', (request, response) => {
+//     const { id } = request.params
+//     const changes = request.body
+//     User
+//     .findOneAndUpdate(request.params.id, (error, result) => {
+//         if (error) {
+//             response.status(500).send(error);
+//         }else if (result){
+//             if (changes._id){
+//                 for (let field in changes){
+//                     result[field] += changes[field] + " ";
+//                 }
+//             }
+//             result.save((error, user)=>{
+//                 if (error){
+//                     response.status(500).send(error);
+//                 }
+//                 response.send(user);
+//             });
+//         }else{
+//             response.status(404).send({"id": request.params.id, "error":  "Not Found"});
+//         }
+//     });
+// });
 
 
 
