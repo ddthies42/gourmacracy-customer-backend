@@ -123,7 +123,7 @@ router.patch('/rating/:id', (request, response, next) => {
                 response.status(500).send(error);
             }else if (result){
                for (let field in request.body){
-                    result[field] = result[field] + request.body[field];
+                db.menuItems.update({ $inc: { field: request.body[field] }});;
                 }
                 result.save((error, menuItem)=>{
                     if (error){
