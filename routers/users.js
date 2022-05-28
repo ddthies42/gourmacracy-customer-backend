@@ -41,7 +41,7 @@ router.get('/', (request, response, next)=>{
     }
 });
 
-//Gets the user with the given email (catch error of id not found)
+//Gets the user with the given id (catch error of id not found)
 router.get('/:id', (request, response, next) =>{
     User
         .findById({"_id": request.params.id}, (error, result) => {
@@ -54,6 +54,34 @@ router.get('/:id', (request, response, next) =>{
             }
         });
 });
+
+// router.get('/:email', (request, response, next) =>{
+//     User
+//         .findById({"email": request.params.email}, (error, result) => {
+//             if (error){
+//                 response.status(500).send(error);
+//             }else if (result){
+//                 response.send(result._id);
+//             }else{
+//                 response.status(404).send({"email": request.params.email, "error": "Not Found"});
+//             }
+//         });
+// });
+
+
+// router.get('/itemId/:id', (request, response, next) =>{
+//     MenuSchema
+//         .findById({"_id": request.params.id}, (error, result) => {
+//             if (error){
+//                 response.status(500).send(error);
+//             }else if (result){
+//                 response.send(request.params.id);
+//             }else{
+//                 response.status(404).send({"id": request.params.id, "error": "Not Found"});
+//             }
+//         });
+// });
+
 
 //Register a User
 router.post('/', (req, response, next) => {
@@ -98,9 +126,12 @@ router.post('/signin', function (req, response) {
                 bcrypt.compare(req.body.password, user.password, function (err, result) {
                        if (result == true) {
                             sess._id = user._id;
+                            sessionStorage.setItem("sess._id", sess._id);
+
                             console.log(user._id);
                             if (sess._id == "6281d69c6009f90004b69931") {
                                response.send('Admin Login Successful!');
+                            
                             } else {
                                response.send('Login Successful!');
                             }
@@ -134,7 +165,7 @@ router.post('/signin', function (req, response) {
 
 
 //Modifies a user with the given id
-router.patch(sID, (request, response, next) => {
+router.patch('/:id', (request, response, next) => {
     User
         .findById(request.params.id, (error, result) => {
             if (error) {
@@ -192,7 +223,7 @@ router.get('/logout',(req,res) => {
 // Add order number + ,
 
 // method to append a user's orders array in database
-router.patch('/purchase/:id', (request, response) => {
+router.patch('/purchase/' + sID, (request, response) => {
     const { id } = request.params
     const changes = request.body
     User
