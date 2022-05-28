@@ -11,9 +11,9 @@ var sess;
 
 function get () {
     // (A) GET FROM SESSION
-    var sID = sessionStorage.getItem("sess._id");
+    //var sID = sessionStorage.getItem("sess._id");
 }
-        
+
 
 //Gets all the users ---
 router.get('/', (request, response, next)=>{
@@ -120,34 +120,33 @@ router.post('/signin', function (req, response) {
                            response.send('Email not found!');
                         } else {
                             user = userData[0];
-                            
+
                             console.log(user);
-                            
+
                 bcrypt.compare(req.body.password, user.password, function (err, result) {
                        if (result == true) {
                             sess._id = user._id;
-                            sessionStorage.setItem("sess._id", sess._id);
+                            //sessionStorage.setItem("sess._id", sess._id);
 
                             console.log(user._id);
-                            if (sess._id == "6281d69c6009f90004b69931") {
-                               response.send('Admin Login Successful!');
-                            
+                            if (user._id == "6281d69c6009f90004b69931") {
+                               response.send({'text': 'Admin Login Successful!', 'id': user._id});
                             } else {
-                               response.send('Login Successful!');
+                               response.send({'text': 'Login Successful!', 'id': user._id});
                             }
 
                        } else {
-                        response.send('Unable to login with this email address and password. ' +
-                            'Check your login information and try again.');
+                        response.send({'text':'Unable to login with this email address and password. ' +
+                            'Check your login information and try again.', 'id': 'error'});
                        }
                      });
                    // });
                    }
             console.log(user);
-            
+
         }
     });
-       
+
 //         if (!user) {
 //            response.send('Email not found!');
 //         } else {
@@ -254,7 +253,7 @@ module.exports = router;
 
 
 // Friend.findOneAndUpdate(
-//     { _id: req.body.id }, 
+//     { _id: req.body.id },
 //     { $push: { friends: objFriends  } },
 //    function (error, success) {
 //          if (error) {
