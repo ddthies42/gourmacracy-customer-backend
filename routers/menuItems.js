@@ -140,6 +140,27 @@ router.patch('/rating/:id', (request, response, next) => {
         });
 });
 
+router.patch('/comment/:id', (request, response, next) => {
+    User
+        .findById(request.params.id, (error, result) => {
+            if (error) {
+                response.status(500).send(error);
+            }else if (result){
+               for (let field in request.body){
+                    result[field] = result[field] + request.body[field];
+                }
+                result.save((error, user)=>{
+                    if (error){
+                        response.status(500).send(error);
+                    }
+                    response.send(user);
+                });
+            }else{
+                response.status(404).send({"id": request.params.id, "error":  "Not Found"});
+            }
+        });
+});
+
 
 
 //Deletes a menu item with the given id
