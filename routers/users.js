@@ -9,6 +9,12 @@ function HandleError(response, reason, message, code){
 }
 var sess;
 
+function get () {
+    // (A) GET FROM SESSION
+    var sID = sessionStorage.getItem("ses._id");
+}
+        
+
 //Gets all the users ---
 router.get('/', (request, response, next)=>{
     let name = request.query['name'];
@@ -159,7 +165,7 @@ router.post('/signin', function (req, response) {
 
 
 //Modifies a user with the given id
-router.patch('/:id', (request, response, next) => {
+router.patch(sID, (request, response, next) => {
     User
         .findById(request.params.id, (error, result) => {
             if (error) {
