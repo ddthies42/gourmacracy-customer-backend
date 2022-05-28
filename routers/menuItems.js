@@ -122,8 +122,11 @@ router.patch('/rating/:id', (request, response, next) => {
             if (error) {
                 response.status(500).send(error);
             }else if (result){
+                if (request.body._id){
+                    delete request.body._id;
+                }
                for (let field in request.body){
-                db.menuItems.update({ $inc: { field: request.body[field] }});;
+                    result[field] = (result[field] + request.body[field]);
                 }
                 result.save((error, menuItem)=>{
                     if (error){
