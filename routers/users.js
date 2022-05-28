@@ -11,7 +11,7 @@ var sess;
 
 function get () {
     // (A) GET FROM SESSION
-    var sID = sessionStorage.getItem("sess._id");
+    //var sID = sessionStorage.getItem("sess._id");
 }
 
 
@@ -126,7 +126,7 @@ router.post('/signin', function (req, response) {
                 bcrypt.compare(req.body.password, user.password, function (err, result) {
                        if (result == true) {
                             sess._id = user._id;
-                            sessionStorage.setItem("sess._id", sess._id);
+                            //sessionStorage.setItem("sess._id", sess._id);
 
                             console.log(user._id);
                             if (user._id == "6281d69c6009f90004b69931") {
