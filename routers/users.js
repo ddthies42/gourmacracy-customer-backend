@@ -35,7 +35,7 @@ router.get('/', (request, response, next)=>{
     }
 });
 
-//Gets the user with the given id (catch error of id not found)
+//Gets the user with the given email (catch error of id not found)
 router.get('/:id', (request, response, next) =>{
     User
         .findById({"_id": request.params.id}, (error, result) => {
@@ -55,7 +55,7 @@ router.get('/:email', (request, response, next) =>{
             if (error){
                 response.status(500).send(error);
             }else if (result){
-                response.send(result._id);
+                response.send(request.params.id);
             }else{
                 response.status(404).send({"email": request.params.email, "error": "Not Found"});
             }
