@@ -29,7 +29,13 @@ let MenuSchema = new Schema({
 
     points: Number,
 
-    numRatings: Number
+    numRatings: Number,
+
+    comments: [{
+        type: String
+        
+
+    }],
 
 });
 
