@@ -11,7 +11,7 @@ var sess;
 
 function get () {
     // (A) GET FROM SESSION
-    var sID = sessionStorage.getItem("ses._id");
+    var sID = sessionStorage.getItem("sess._id");
 }
         
 
@@ -223,7 +223,7 @@ router.get('/logout',(req,res) => {
 // Add order number + ,
 
 // method to append a user's orders array in database
-router.patch('/purchase/' + sID, (request, response) => {
+router.patch('/purchase/:id', (request, response) => {
     const { id } = request.params
     const changes = request.body
     User
