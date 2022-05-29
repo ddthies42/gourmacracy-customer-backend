@@ -196,9 +196,9 @@ router.patch('/purchase/:id', (request, response, next) => {
             if (error) {
                 response.status(500).send(error);
             }else if (result){
-               
-                    
-                
+
+
+
                 for (let field in request.body){
                     result[field] = result[field] + request.body[field];
                 }
@@ -234,12 +234,17 @@ router.delete('/:id', (request, response, next) => {
 });
 
 //logout
-router.get('/logout',(req,res) => {
+router.post('/logout/',(req,response) => {
+    //console.log(req.body.id);
     req.session.destroy((err) => {
         if(err) {
+            response.send("Backend token not deleted: " + err);
             return console.log(err);
         }
-        res.redirect('/');
+        else {
+          response.send("Logged out successfully.");
+        }
+        
     });
 
 });
