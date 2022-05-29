@@ -141,7 +141,7 @@ router.patch('/rating/:id', (request, response, next) => {
 });
 
 router.patch('/comment/:id', (request, response, next) => {
-    User
+    MenuSchema
         .findById(request.params.id, (error, result) => {
             if (error) {
                 response.status(500).send(error);
@@ -149,11 +149,11 @@ router.patch('/comment/:id', (request, response, next) => {
                for (let field in request.body){
                     result[field] = result[field] + request.body[field];
                 }
-                result.save((error, user)=>{
+                result.save((error, menuItem)=>{
                     if (error){
                         response.status(500).send(error);
                     }
-                    response.send(user);
+                    response.send(menuItem);
                 });
             }else{
                 response.status(404).send({"id": request.params.id, "error":  "Not Found"});
