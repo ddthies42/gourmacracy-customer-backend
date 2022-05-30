@@ -147,7 +147,11 @@ router.patch('/comment/:id', (request, response, next) => {
                 response.status(500).send(error);
             }else if (result){
                for (let field in request.body){
-                    result[field] = result[field] + request.body[field];
+                   if (result[field] == ""){
+                       result[field] = result[field] + request.body[field];
+                   }else{
+                       result[field] = result[field] + ", " + request.body[field];
+                   }
                 }
                 result.save((error, menuItem)=>{
                     if (error){

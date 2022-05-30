@@ -196,11 +196,12 @@ router.patch('/purchase/:id', (request, response, next) => {
             if (error) {
                 response.status(500).send(error);
             }else if (result){
-
-
-
                 for (let field in request.body){
-                    result[field] = result[field] + request.body[field];
+                    if (result[field] == ""){
+                        result[field] = result[field] + request.body[field];
+                    }else{
+                        result[field] = result[field] + ", " + request.body[field];
+                    }
                 }
                 result.save((error, user)=>{
                     if (error){
