@@ -109,21 +109,43 @@ router.post('/signin', function (req, response) {
 router.patch('/:id', (request, response, next) => {
     User
         .findById(request.params.id, (error, result) => {
+            // If error while finding user:
             if (error) {
                 response.status(500).send(error);
+            // If user found:
             }else if (result){
+                // Remove ID from request.
                 if (request.body._id){
                     delete request.body._id;
                 }
-                for (let field in request.body){
+                // If the password is new:
+                if(result["password"] != request.body["password"]) {
+                    
+                    bcrypt.hash(request.body["password"], 10).then((hash) => {
+                        for(let field in request.body) {
+                          result[field] = request.body[field];
+                        }
+                        result["password"] = hash;
+                      result.save((error, user)=>{
+                          if (error){
+                              response.status(500).send(error);
+                          }
+                          response.send(user);
+                      });
+                  });
+                // Otherwise, not new password:
+                } else {
+                  for(let field in request.body) {
                     result[field] = request.body[field];
+                  }
+                  result.save((error, user)=>{
+                      if (error){
+                          response.status(500).send(error);
+                      }
+                      response.send(user);
+                  });
                 }
-                result.save((error, user)=>{
-                    if (error){
-                        response.status(500).send(error);
-                    }
-                    response.send(user);
-                });
+            // If no user found:
             }else{
                 response.status(404).send({"id": request.params.id, "error":  "Not Found"});
             }
