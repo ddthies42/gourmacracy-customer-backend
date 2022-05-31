@@ -99,7 +99,7 @@ router.post('/signin', function (req, response) {
              });
         } else {
           response.send({'text':'Unable to login with this email address and password. ' +
-              'Check your login information.', 'id': 'error'});
+              'Check your login information and try again later.', 'id': 'error'});
         }
     });
  });
