@@ -58,7 +58,8 @@ router.post('/', (req, response, next) => {
         });
         user.save( (error) => {
             if(error){
-                response.send({"error": error});
+                response.send({'text':'Unable to sign up with this email address and password. ' +
+                    'Check your sign up information and try again later.', 'id': 'error', 'error': 'There was an error.'});
             } else {
                 response.send(user.name);
             }
@@ -76,7 +77,7 @@ router.post('/signin', function (req, response) {
         if (error) {
 
             // response.send({"error": error}); // Want to give message frontend can use.
-            response.send({'text': 'Error signing in. Try again later.', 'id': 'error', 'error': error});
+            response.send({'text': 'Error signing in. Try again later.', 'id': 'error', 'error': 'There was an error.'});
 
             // If the results are not blank, it is a user.
         } else if (userData.length > 0) {
@@ -120,7 +121,7 @@ router.patch('/:id', (request, response, next) => {
                 }
                 // If the password is new:
                 if(result["password"] != request.body["password"]) {
-                    
+
                     bcrypt.hash(request.body["password"], 10).then((hash) => {
                         for(let field in request.body) {
                           result[field] = request.body[field];
