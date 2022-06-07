@@ -140,6 +140,9 @@ router.patch('/rating/:id', (request, response, next) => {
         });
 });
 
+
+//made change for github commit changes
+
 router.patch('/comment/:id', (request, response, next) => {
     MenuSchema
         .findById(request.params.id, (error, result) => {

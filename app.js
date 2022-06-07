@@ -51,6 +51,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+
+//API
 // To be able to use the API everywhere
 app.use((request, response, next) => {
   response.header('Access-Control-Allow-Origin', '*');
