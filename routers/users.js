@@ -58,8 +58,7 @@ router.post('/', (req, response, next) => {
         });
         user.save( (error) => {
             if(error){
-                response.send({'text':'Unable to sign up with this email address and password. ' +
-                    'Check your sign up information and try again later.', 'id': 'error', 'error': 'There was an error.'});
+                response.send({'error': 'There was an error.'});
             } else {
                 response.send(user.name);
             }
