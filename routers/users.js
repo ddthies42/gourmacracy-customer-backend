@@ -58,9 +58,9 @@ router.post('/', (req, response, next) => {
         });
         user.save( (error) => {
             if(error){
-                response.send({'error': 'There was an error.'});
+                response.send({'text': 'None', 'error': 'Error'});
             } else {
-                response.send(user.name);
+                response.send({'text': user.name, 'error': 'None'});
             }
         });
     });
@@ -76,7 +76,7 @@ router.post('/signin', function (req, response) {
         if (error) {
 
             // response.send({"error": error}); // Want to give message frontend can use.
-            response.send({'text': 'Error signing in. Try again later.', 'id': 'error', 'error': 'There was an error.'});
+            response.send({'text': 'Error signing in. Try again later.', 'id': 'Error', 'error': 'Error'});
 
             // If the results are not blank, it is a user.
         } else if (userData.length > 0) {
